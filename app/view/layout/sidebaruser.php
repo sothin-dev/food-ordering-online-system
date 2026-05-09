@@ -1,48 +1,55 @@
-<aside class="fixed left-0 top-0 h-screen w-72 bg-white shadow-lg flex flex-col justify-between">
+<?php
+$currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    <!-- Logo / Title -->
+function userNavClass($path, $currentPath)
+{
+    return $currentPath === $path
+        ? 'bg-emerald-600 text-white shadow-sm'
+        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950';
+}
+?>
+
+<aside class="fixed left-0 top-[67px] flex h-[calc(100vh-67px)] w-72 flex-col justify-between border-r border-slate-200 bg-white/95 backdrop-blur">
     <div>
-        <div class="px-6 py-6 border-b">
-            <h1 class="text-2xl font-bold text-green-600">🍔 Food Order</h1>
+        <div class="border-b border-slate-200 px-6 py-5">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-600 text-white">
+                    <i class="fa-solid fa-utensils"></i>
+                </span>
+                <div>
+                    <h1 class="font-semibold text-slate-950">Food Order</h1>
+                    <p class="text-xs text-slate-500">Your daily menu</p>
+                </div>
+            </div>
         </div>
 
-        <!-- Navigation -->
-        <nav class="mt-6 px-4 space-y-2">
-
-            <?php
-            // Get current path without query string
-            $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-            ?>
-
-            <a href="/user/home" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= ($currentPath == '/user/home') ? 'bg-green-100 text-green-600 font-medium' : 'hover:bg-gray-100 transition' ?>">
-                <span>📋</span>
+        <nav class="space-y-1 p-4">
+            <a href="/user/home" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition <?= userNavClass('/user/home', $currentPath) ?>">
+                <i class="fa-solid fa-table-list w-5"></i>
                 Menu
             </a>
 
-            <a href="/user/cart?id=<?= $_SESSION['userid'] ?>" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= ($currentPath == '/user/cart') ? 'bg-green-100 text-green-600 font-medium' : 'hover:bg-gray-100 transition' ?>">
-                <span>🛒</span>
+            <a href="/user/cart?id=<?= $_SESSION['userid'] ?>" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition <?= userNavClass('/user/cart', $currentPath) ?>">
+                <i class="fa-solid fa-cart-shopping w-5"></i>
                 My Cart
             </a>
 
-            <a href="/user/orders?id=<?= $_SESSION['userid'] ?>" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= ($currentPath == '/user/orders') ? 'bg-green-100 text-green-600 font-medium' : 'hover:bg-gray-100 transition' ?>">
-                <span>📦</span>
+            <a href="/user/orders?id=<?= $_SESSION['userid'] ?>" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition <?= userNavClass('/user/orders', $currentPath) ?>">
+                <i class="fa-solid fa-box-open w-5"></i>
                 Order History
             </a>
 
-            <a href="/user/profile?id=<?= $_SESSION['userid'] ?>" class="flex items-center gap-3 px-4 py-3 rounded-lg <?= ($currentPath == '/user/profile') ? 'bg-green-100 text-green-600 font-medium' : 'hover:bg-gray-100 transition' ?>">
-                <span>👤</span>
+            <a href="/user/profile?id=<?= $_SESSION['userid'] ?>" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition <?= userNavClass('/user/profile', $currentPath) ?>">
+                <i class="fa-solid fa-circle-user w-5"></i>
                 Profile
             </a>
-
         </nav>
     </div>
 
-    <!-- Logout -->
-    <div class="p-4 border-t">
-        <a href="/user/logout" class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 transition">
-            <span>🚪</span>
+    <div class="border-t border-slate-200 p-4">
+        <a href="/user/logout" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-red-600 transition hover:bg-red-50">
+            <i class="fa-solid fa-right-from-bracket w-5"></i>
             Logout
         </a>
     </div>
-
 </aside>

@@ -121,16 +121,17 @@ class userHomeController
         $output = '';
         if ($products) {
             foreach ($products as $item) {
-                $output .= '<div class="bg-white shadow rounded-lg overflow-hidden hover:scale-105 transform transition duration-300">';
-                $output .= '<img src="data:image/jpeg;base64,' . base64_encode($item['image']) . '" class="w-32 h-32 object-cover rounded-lg border" alt="' . htmlspecialchars($item['name']) . ' Image">';
+                $output .= '<div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">';
+                $output .= '<img src="data:image/jpeg;base64,' . base64_encode($item['image']) . '" class="h-48 w-full object-cover bg-slate-100" alt="' . htmlspecialchars($item['name']) . ' Image">';
                 $output .= '<div class="p-4">';
-                $output .= '<h4 class="font-semibold text-lg text-gray-800">' . htmlspecialchars($item['name']) . '</h4>';
-                $output .= '<p class="text-green-600 font-bold mt-1">' . htmlspecialchars($item['price']) . '</p>';
-                $output .= '<a href="/user/cart/add.php?id=' . $item['id'] . '" class="mt-3 inline-block w-full text-center px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">Add to Cart</a>';
+                $output .= '<h4 class="text-lg font-semibold text-slate-950">' . htmlspecialchars($item['name']) . '</h4>';
+                $output .= '<p class="mt-1 font-semibold text-emerald-600">$' . number_format((float)$item['price'], 2) . '</p>';
+                $output .= '<form class="addToCart"><input type="hidden" name="product_id" value="' . $item['id'] . '">';
+                $output .= '<button type="submit" class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"><i class="fa-solid fa-plus"></i>Add to Cart</button></form>';
                 $output .= '</div></div>';
             }
         } else {
-            $output = '<p class="text-gray-500 col-span-full">No products found in this category.</p>';
+            $output = '<p class="col-span-full rounded-lg border border-slate-200 bg-white p-6 text-slate-500">No products found in this category.</p>';
         }
 
         echo $output;

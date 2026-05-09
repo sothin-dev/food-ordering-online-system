@@ -2,9 +2,15 @@
 require_once __DIR__ . "/../layout/header.php";
 ?>
 
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white p-10 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-semibold text-center mb-6">Create User</h2>
+<div class="flex min-h-[calc(100vh-140px)] items-center justify-center px-5 py-12">
+    <div class="w-full max-w-lg rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
+        <div class="mb-8 text-center">
+            <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-600 text-white">
+                <i class="fa-solid fa-user-plus"></i>
+            </span>
+            <h2 class="mt-4 text-2xl font-semibold tracking-tight text-slate-950">Create account</h2>
+            <p class="mt-2 text-sm text-slate-500">Join the ordering system and start building your cart.</p>
+        </div>
 
         <!-- Message Container -->
         <p id="message" class="text-center font-semibold mb-4"></p>
@@ -13,23 +19,23 @@ require_once __DIR__ . "/../layout/header.php";
 
             <!-- Username -->
             <div class="mb-4">
-                <label class="block text-gray-700 mb-1">Username</label>
+                <label class="mb-2 block text-sm font-medium text-slate-700">Username</label>
                 <input
                     type="text"
                     name="username"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                     placeholder="Enter username">
             </div>
 
             <!-- Email -->
             <div class="mb-4">
-                <label class="block text-gray-700 mb-1">Email</label>
+                <label class="mb-2 block text-sm font-medium text-slate-700">Email</label>
                 <input
                     type="email"
                     name="email"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                     placeholder="Enter email"
                     id="email">
                 <p class="text-red-600 text-xs invisible" id="erroremail">Email must contain @</p>
@@ -37,12 +43,12 @@ require_once __DIR__ . "/../layout/header.php";
 
             <!-- Password -->
             <div class="mb-4">
-                <label class="block text-gray-700 mb-1">Password</label>
+                <label class="mb-2 block text-sm font-medium text-slate-700">Password</label>
                 <input
                     type="password"
                     name="password"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                     placeholder="Enter password"
                     id="password">
                 <p id="errorPs" class="text-red-600 text-xs invisible">Password must be at least 8 characters</p>
@@ -50,12 +56,12 @@ require_once __DIR__ . "/../layout/header.php";
 
             <!-- Confirm Password -->
             <div class="mb-4">
-                <label class="block text-gray-700 mb-1">Confirm Password</label>
+                <label class="mb-2 block text-sm font-medium text-slate-700">Confirm Password</label>
                 <input
                     type="password"
                     name="confirm_password"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                     placeholder="Confirm password"
                     id="confirmpw">
                 <p id="errorPasCf" class="text-red-600 text-xs invisible">Passwords do not match</p>
@@ -63,11 +69,11 @@ require_once __DIR__ . "/../layout/header.php";
 
             <!-- Role -->
             <div class="mb-4">
-                <label class="block text-gray-700 mb-1">Role</label>
+                <label class="mb-2 block text-sm font-medium text-slate-700">Role</label>
                 <select
                     name="role"
                     required
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100">
                     <option value="">Select role</option>
                     <option value="admin">Admin</option>
                     <option value="user" selected>User</option>
@@ -76,11 +82,11 @@ require_once __DIR__ . "/../layout/header.php";
 
             <!-- Profile Image -->
             <div class="mb-6">
-                <label class="block text-gray-700 mb-1">Profile Image</label>
+                <label class="mb-2 block text-sm font-medium text-slate-700">Profile Image</label>
 
                 <!-- Preview -->
                 <div class="mb-2">
-                    <img id="profilePreview" src="" alt="Profile Preview" class="w-32 h-32 object-cover rounded-full border border-gray-300 hidden">
+                    <img id="profilePreview" src="" alt="Profile Preview" class="h-24 w-24 rounded-lg border border-slate-200 object-cover hidden">
                 </div>
 
                 <!-- File Input -->
@@ -88,7 +94,7 @@ require_once __DIR__ . "/../layout/header.php";
                     type="file"
                     name="profile"
                     accept="image/*"
-                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition file:mr-4 file:rounded-lg file:border-0 file:bg-slate-100 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-slate-700 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
                     id="profileInput">
             </div>
 
@@ -96,11 +102,12 @@ require_once __DIR__ . "/../layout/header.php";
             <!-- Submit Button -->
             <button
                 type="submit"
-                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                <i class="fa-solid fa-check"></i>
                 Save User
             </button>
 
-            <a href="../user/login" class="block text-center mt-4 text-blue-600 hover:underline">Already have an account? Login</a>
+            <a href="/user/login" class="mt-5 block text-center text-sm font-medium text-emerald-700 hover:underline">Already have an account? Login</a>
 
         </form>
     </div>

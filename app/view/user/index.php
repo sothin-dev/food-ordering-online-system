@@ -8,30 +8,37 @@ require_once __DIR__ . "/../layout/header.php";
     <?php require_once __DIR__ . "/../layout/sidebaruser.php"; ?>
 
     <!-- Main Content -->
-    <main class="flex-1 bg-gray-100 p-6 ml-72">
+    <main class="ml-72 flex-1 bg-slate-50 p-8">
 
         <!-- Welcome Section -->
-        <div class="mb-8">
-            <h2 class="text-3xl font-bold text-gray-800">Welcome, <?= $_SESSION['username'] ?? 'User' ?>!</h2>
-            <p class="text-gray-600 mt-2">Explore our menu and place your order quickly.</p>
+        <div class="mb-8 flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+            <div>
+                <p class="text-sm font-medium uppercase tracking-wide text-emerald-600">Today's Menu</p>
+                <h2 class="mt-1 text-3xl font-semibold tracking-tight text-slate-950">Welcome, <?= $_SESSION['username'] ?? 'User' ?></h2>
+                <p class="mt-2 text-slate-500">Browse categories, add items to cart, and checkout quickly.</p>
+            </div>
+            <a href="/user/cart?id=<?= $_SESSION['userid'] ?>" class="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800">
+                <i class="fa-solid fa-cart-shopping"></i>
+                View Cart
+            </a>
         </div>
 
         <!-- Quick Actions / Categories -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+        <div class="mb-8 flex flex-wrap gap-3">
             <a href="#"
                 data-cateid="0"
-                class="category-filter bg-white shadow rounded-lg p-4 flex flex-col items-center justify-center hover:bg-green-50 transition">
+                class="category-filter inline-flex items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 px-5 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100">
 
-                <span class="font-semibold text-gray-700">
+                <span>
                     All
                 </span>
             </a>
             <?php foreach ($categories as $category): ?>
                 <a href="#"
                     data-cateid="<?= $category['id'] ?>"
-                    class="category-filter bg-white shadow rounded-lg p-4 flex flex-col items-center justify-center hover:bg-green-50 transition">
+                    class="category-filter inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-2 text-sm font-semibold text-slate-600 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700">
 
-                    <span class="font-semibold text-gray-700">
+                    <span>
                         <?= $category['name'] ?>
                     </span>
                 </a>
@@ -41,23 +48,27 @@ require_once __DIR__ . "/../layout/header.php";
 
         <!-- Featured Menu Section -->
         <div id="menuContainer">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">Featured Menu</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="products">
+            <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-2xl font-semibold text-slate-950">Featured Menu</h3>
+                <span class="text-sm text-slate-500"><?= $totalProducts ?> items</span>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" id="products">
                 <?php foreach ($featured as $item): ?>
-                    <div class="bg-white shadow rounded-lg overflow-hidden hover:scale-105 transform transition duration-300 h-84">
+                    <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                         <img
                             src="data:image/jpeg;base64,<?= base64_encode($item['image']) ?>"
-                            class="w-full h-50 object-cover rounded-lg border"
+                            class="h-48 w-full object-cover bg-slate-100"
                             alt="<?= $item['name'] ?> Image">
                         <div class="p-4">
-                            <h4 class="font-semibold text-lg text-gray-800"><?= $item['name'] ?></h4>
-                            <p class="text-green-600 font-bold mt-1"><?= $item['price'] ?></p>
+                            <h4 class="text-lg font-semibold text-slate-950"><?= $item['name'] ?></h4>
+                            <p class="mt-1 font-semibold text-emerald-600">$<?= number_format((float)$item['price'], 2) ?></p>
                             <form id="addToCart" class="addToCart">
                                 <input type="hidden" name="product_id" value="<?= $item['id'] ?>">
 
                                 <button
                                     type="submit"
-                                    class="mt-3 w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                                    class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+                                    <i class="fa-solid fa-plus"></i>
                                     Add to Cart
                                 </button>
                             </form>
@@ -67,10 +78,10 @@ require_once __DIR__ . "/../layout/header.php";
             </div>
             <!-- Pagination -->
             <?php if ($totalPages > 1): ?>
-                <div class="flex justify-center mt-6 space-x-2">
+                <div class="mt-8 flex justify-center gap-2">
                     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                         <a href="?page=<?= $i ?>"
-                            class="px-3 py-1 rounded <?= ($i == $page) ? 'bg-green-600 text-white' : 'bg-white border hover:bg-gray-100' ?>">
+                            class="rounded-lg px-3 py-2 text-sm font-semibold <?= ($i == $page) ? 'bg-emerald-600 text-white' : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50' ?>">
                             <?= $i ?>
                         </a>
                     <?php endfor; ?>
@@ -101,26 +112,20 @@ require_once __DIR__ . "/../layout/header.php";
         });
 
 
-        // Add to cart
-        document.querySelectorAll(".addToCart").forEach(form => {
+        productsDiv.addEventListener("submit", function(e) {
+            const form = e.target.closest(".addToCart");
+            if (!form) return;
 
-            form.addEventListener("submit", function(e) {
+            e.preventDefault();
 
-                e.preventDefault();
-
-                const formData = new FormData(form);
-
-                fetch("/user/cart/add", {
-                        method: "POST",
-                        body: formData
-                    })
-                    .then(response => response.text())
-                    .then(data => {
-                        console.log(data);
-                    });
-
-            });
-
+            fetch("/user/cart/add", {
+                    method: "POST",
+                    body: new FormData(form)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                });
         });
 
     });

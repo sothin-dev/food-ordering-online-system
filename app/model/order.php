@@ -31,15 +31,20 @@ class orderModel
 
     public function getAllOrders($start, $limit)
     {
-        $sql = "SELECT o.*, u.username, COUNT(oi.id) AS total_items, SUM(p.price*oi.quantity) AS total_price
-                FROM orders o 
-                JOIN users u 
-                ON u.id = o.user_id
-                JOIN order_items oi
-                ON o.id = oi.order_id
-                JOIN products p 
-                ON p.id = oi.product_id
-                GROUP BY u.username, u.id;
+        $sql = "SELECT
+                    o.id,
+                    o.user_id,
+                    o.status,
+                    o.created_at,
+                    u.username,
+                    COUNT(oi.id) AS total_items,
+                    COALESCE(SUM(p.price * oi.quantity), o.total_price) AS total_price
+                FROM orders o
+                JOIN users u ON u.id = o.user_id
+                LEFT JOIN order_items oi ON o.id = oi.order_id
+                LEFT JOIN products p ON p.id = oi.product_id
+                GROUP BY o.id, o.user_id, o.total_price, o.status, o.created_at, u.username
+                ORDER BY o.created_at DESC
                 LIMIT :start, :limit";
 
         $stmt = $this->conn->prepare($sql);
@@ -56,7 +61,7 @@ class orderModel
 
     public function findOrder($id)
     {
-        $sql = "SELECT u.username,o.*, u.useremail, p.name, p.price , SUM(p.price*oi.quantity) AS total_price, oi.quantity
+        $sql = "SELECT u.username, o.*, u.useremail, p.name, p.price, (p.price * oi.quantity) AS total_price, oi.quantity
                 FROM orders o
                 JOIN users u 
                 ON u.id = o.user_id
@@ -64,8 +69,7 @@ class orderModel
                 ON oi.order_id = o.id
                 JOIN products p 
                 ON p.id = oi.product_id 
-                where o.id = ?
-                 GROUP BY p.name;";
+                WHERE o.id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$id]);
 

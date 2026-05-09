@@ -1,43 +1,49 @@
 <?php
 require_once __DIR__ . "/../layout/header.php";
-$message = isset($_GET['message'])?$_GET['message']:"";
+$message = isset($_GET['message']) ? $_GET['message'] : "";
 ?>
 
-<form action="/user/login" method="POST" class="max-w-lg mx-auto my-auto mt-10 bg-white p-10 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold text-center mb-6">
-        Login user
-    </h2>
-    <?php if($message==='logined') :?>
-        <p class="text-red-600 text-center font-semibold">
-            your email is already registered 
-        </p>
-    <?php endif;?>
-    <div class="mb-4">
-        <label for="useremail" class="block text-gray-700 mb-1">Email</label>
-        <input type="email"
-        name="useremail"
-        required
-        placeholder="Enter your email..."
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-    </div>
+<main class="flex min-h-[calc(100vh-140px)] items-center justify-center px-5 py-12">
+    <form action="/user/login" method="POST" class="w-full max-w-md rounded-lg border border-slate-200 bg-white p-8 shadow-sm">
+        <div class="mb-8 text-center">
+            <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-600 text-white">
+                <i class="fa-solid fa-right-to-bracket"></i>
+            </span>
+            <h2 class="mt-4 text-2xl font-semibold tracking-tight text-slate-950">Welcome back</h2>
+            <p class="mt-2 text-sm text-slate-500">Sign in to manage orders and continue shopping.</p>
+        </div>
 
-    <div class="mb-4">
-        <label for="userpassword" class="block text-gray-700 mb-1">Password</label>
-        <input type="password"
-        name="userpassword"
-        required
-        placeholder="Enter your password..."
-        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-    </div>
-    <button type="submit" class="w-full bg-blue-600 px-4 py-2 border border-none rounded-md font-semibold text-white">
-        Login
-    </button>
-    <a href="create" class="block text-center hover:underline mt-4">Don't have account! register?</a>
-</form>
+        <?php if ($message === 'logined') : ?>
+            <p class="mb-4 rounded-lg bg-red-50 px-4 py-3 text-center text-sm font-medium text-red-700">
+                Your email is already registered.
+            </p>
+        <?php endif; ?>
 
+        <div class="mb-4">
+            <label for="useremail" class="mb-2 block text-sm font-medium text-slate-700">Email</label>
+            <input type="email"
+                name="useremail"
+                required
+                placeholder="admin@example.com"
+                class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100">
+        </div>
 
-<?php
-require_once __DIR__ . "/../layout/footer.php";
-?>
+        <div class="mb-6">
+            <label for="userpassword" class="mb-2 block text-sm font-medium text-slate-700">Password</label>
+            <input type="password"
+                name="userpassword"
+                required
+                placeholder="Enter your password"
+                class="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100">
+        </div>
+
+        <button type="submit" class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-700">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            Login
+        </button>
+
+        <a href="/user/create" class="mt-5 block text-center text-sm font-medium text-emerald-700 hover:underline">Create a new account</a>
+    </form>
+</main>
+
+<?php require_once __DIR__ . "/../layout/footer.php"; ?>

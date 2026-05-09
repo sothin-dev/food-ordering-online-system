@@ -78,6 +78,7 @@ Route::get('/user/logout', [UsersController::class, 'logout']);
 
 // ===== Admin Dashboard =====
 Route::get('/admin.home', [HomeController::class, 'index']);
+Route::get('/admin/home', [HomeController::class, 'index']);
 
 
 // ===== Admin Users =====
